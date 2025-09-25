@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../..:/workspace:cached
+    working_dir: /workspace
+    environment:
+      - PROJECT_DOMAIN=${CODESPACE_NAME}-8080.preview.app.github.dev
+      - APP_URL=https://${CODESPACE_NAME}-8080.preview.app.github.dev
+      - PROJECT_NAME=WordPress Development
+      - WORDPRESS_ADMIN_USER=admin
+      - WORDPRESS_ADMIN_PASSWORD=admin
+      - WORDPRESS_ADMIN_EMAIL=admin@example.com
+      - DB_HOST=database
+      - DB_NAME=wordpress
+      - DB_USER=wordpress
+      - DB_PASSWORD=wordpress
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - database
+      - redis
+    ports:
+      - "8080:80"
+    networks:
+      - wordpress-network
+
+  database:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ../../server/data/db.sql.gz:/docker-entrypoint-initdb.d/db.sql.gz:ro
+    ports:
+      - "3306:3306"
+    networks:
+      - wordpress-network
+    command: --default-authentication-plugin=mysql_native_password
+
+  redis:
+    image: redis:6-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - wordpress-network
+    volumes:
+      - redis_data:/data
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  wordpress-network:
+    driver: bridge
