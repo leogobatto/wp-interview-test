@@ -1,57 +1,106 @@
 {
-    "name": "WP + Lando (Codespaces)",
-    "image": "mcr.microsoft.com/devcontainers/base:jammy",
-    "features": {
-      "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-      "ghcr.io/devcontainers/features/node:1": { "version": "20" }
-    },
-    "postCreateCommand": "bash .devcontainer/setup-lando.sh",
-    "customizations": {
-      "vscode": {
-        "extensions": [
-            "eamodio.gitlens",
-            "ms-vscode.vscode-json",
-            "streetsidesoftware.code-spell-checker",
-            "vivaxy.vscode-conventional-commits",
-            "bmewburn.vscode-intelephense-client",
-            "wordpresstoolbox.wordpress-toolbox",
-            "tungvn.wordpress-snippet",
-            "junstyle.php-cs-fixer",
-            "felixfbecker.php-debug",
-            "esbenp.prettier-vscode",
-            "dbaeumer.vscode-eslint",
-            "bradlc.vscode-tailwindcss",
-            "ms-azuretools.vscode-docker",
-            "ms-vscode-remote.remote-containers",
-            "ms-vscode.vscode-typescript-next",
-            "formulahendry.auto-rename-tag",
-            "christian-kohler.path-intellisense",
-            "ms-vscode.vscode-todo-highlight",
-            "mhutchie.git-graph",
-            "pkief.material-icon-theme",
-            "zhuangtongfa.material-theme",
-            "xdebug.php-debug",
-            "yzhang.markdown-all-in-one",
-            "davidanson.vscode-markdownlint",
-            "editorconfig.editorconfig",
-            "ms-vscode.js-debug",
-            "johnbillion.vscode-wordpress-hooks",
-            "valeryanm.vscode-phpsab",
-            "GitHub.copilot",
-            "GitHub.copilot-chat",
-            "ms-vscode-remote.remote-wsl",
-            "Catppuccin.catppuccin-vsc",
-            "sainnhe.everforest",
-            "eamodio.gitlens",
-            "mhutchie.git-graph",
-            "vivaxy.vscode-conventional-commits",
-            "esbenp.prettier-vscode",
-            "dbaeumer.vscode-eslint",
-            "editorconfig.editorconfig",
-            "stylelint.vscode-stylelint",
-            "bmewburn.vscode-intelephense-client",
-            "bradlc.vscode-tailwindcss"
-        ]
+  "name": "WordPress Development Environment",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "bradlc.vscode-tailwindcss",
+        "eamodio.gitlens",
+        "vivaxy.vscode-conventional-commits",
+        "wordpresstoolbox.wordpress-toolbox",
+        "junstyle.php-cs-fixer",
+        "felixfbecker.php-debug",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers",
+        "editorconfig.editorconfig",
+        "stylelint.vscode-stylelint",
+        "GitHub.copilot",
+        "GitHub.copilot-chat"
+      ],
+      "settings": {
+        "php.validate.enable": true,
+        "php.validate.executablePath": "/usr/local/bin/php",
+        "php.validate.run": "onSave",
+        "php.suggest.basic": false,
+        "intelephense.files.maxSize": 5000000,
+        "intelephense.files.exclude": [
+          "**/.git/**",
+          "**/node_modules/**",
+          "**/vendor/**/{Test,test,Tests,tests}/**",
+          "**/wp/**",
+          "**/content/cache/**"
+        ],
+        "intelephense.stubs": [
+          "wordpress"
+        ],
+        "[php]": {
+          "editor.defaultFormatter": "junstyle.php-cs-fixer",
+          "editor.formatOnSave": true,
+          "editor.insertSpaces": true,
+          "editor.tabSize": 4
+        },
+        "[blade]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.formatOnSave": false,
+          "editor.insertSpaces": true,
+          "editor.tabSize": 2
+        },
+        "[javascript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.formatOnSave": false,
+          "editor.insertSpaces": true,
+          "editor.tabSize": 2
+        },
+        "[css]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.formatOnSave": false,
+          "editor.insertSpaces": true,
+          "editor.tabSize": 2
+        },
+        "files.eol": "\n",
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true,
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "search.exclude": {
+          "**/node_modules": true,
+          "**/vendor": true,
+          "**/public/build": true,
+          "**/dist": true,
+          "**/wp": true
+        },
+        "files.exclude": {
+          "**/node_modules": true,
+          "**/vendor": true,
+          "**/.DS_Store": true,
+          "**/Thumbs.db": true
+        }
       }
     }
-  }
+  },
+  "forwardPorts": [8080, 3306, 6379],
+  "portsAttributes": {
+    "8080": {
+      "label": "WordPress Site",
+      "onAutoForward": "notify"
+    },
+    "3306": {
+      "label": "MySQL Database"
+    },
+    "6379": {
+      "label": "Redis Cache"
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/setup-codespaces.sh",
+  "remoteUser": "root"
+}
