@@ -19,7 +19,10 @@ config:
   env_file:
     - .env
 services:
+  database:
+    portforward: true
   appserver:
+    portforward: true
     build_as_root:
       - apt-get update
       - apt-get install -y curl gnupg
@@ -36,6 +39,7 @@ services:
       - wp theme activate testing
       - cd /app/content/themes/testing && wp acorn optimize:clear && wp acorn optimize
   cache:
+    portforward: true
     type: redis:6
 tooling:
   yarn:
