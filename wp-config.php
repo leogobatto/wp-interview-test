@@ -1,0 +1,190 @@
+<?php
+
+/**
+ * The base configuration for WordPress
+ *
+ * The wp-config.php creation script uses this file during the installation.
+ * You don't have to use the website, you can copy this file to "wp-config.php"
+ * and fill in the values.
+ *
+ * This file contains the following configurations:
+ *
+ * * Database settings
+ * * Secret keys
+ * * Database table prefix
+ * * ABSPATH
+ *
+ * This has been slightly modified (to read environment variables) for use in Docker.
+ *
+ * @link https://developer.wordpress.org/advanced-administration/wordpress/wp-config/
+ *
+ * @package WordPress
+ */
+
+// ** Load Composer autoload ** //
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
+} else {
+    die('Error: Composer autoload not found.');
+}
+
+
+// ** Carregar o .env para variáveis de ambiente ** //
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+$requiredEnvs = ['WORDPRESS_DB_NAME', 'WORDPRESS_DB_USER', 'WORDPRESS_DB_PASSWORD', 'WORDPRESS_DB_HOST', 'WORDPRESS_SITE_URL'];
+$dotenv->required($requiredEnvs);
+
+// a helper function to lookup "env_FILE", "env", then fallback
+if (!function_exists('getenv_docker')) {
+    // https://github.com/docker-library/wordpress/issues/588 (WP-CLI will load this file 2x)
+    function getenv_docker($env, $default)
+    {
+        if (getenv('LANDO_INFO')) {
+            // Lando-specific environment variable
+            return $_ENV[$env] ?? $default;
+        } else if ($fileEnv = getenv($env . '_FILE')) {
+            return rtrim(file_get_contents($fileEnv), "\r\n");
+        } else if (($val = getenv($env)) !== false) {
+            return $val;
+        } else {
+            return $default;
+        }
+    }
+}
+
+// ** Database settings - You can get this info from your web host ** //
+/** The name of the database for WordPress */
+define('DB_NAME', getenv_docker('WORDPRESS_DB_NAME', 'wordpress'));
+
+/** Database username */
+define('DB_USER', getenv_docker('WORDPRESS_DB_USER', 'example username'));
+
+/** Database password */
+define('DB_PASSWORD', getenv_docker('WORDPRESS_DB_PASSWORD', 'example password'));
+
+/**
+ * Docker image fallback values above are sourced from the official WordPress installation wizard:
+ * https://github.com/WordPress/WordPress/blob/1356f6537220ffdc32b9dad2a6cdbe2d010b7a88/wp-admin/setup-config.php#L224-L238
+ * (However, using "example username" and "example password" in your database is strongly discouraged.  Please use strong, random credentials!)
+ */
+
+/** Database hostname */
+define('DB_HOST', getenv_docker('WORDPRESS_DB_HOST', 'mysql'));
+
+/** Database charset to use in creating database tables. */
+define('DB_CHARSET', getenv_docker('WORDPRESS_DB_CHARSET', 'utf8'));
+
+/** The database collate type. Don't change this if in doubt. */
+define('DB_COLLATE', getenv_docker('WORDPRESS_DB_COLLATE', ''));
+
+/**#@+
+ * Authentication unique keys and salts.
+ *
+ * Change these to different unique phrases! You can generate these using
+ * the {@link https://api.wordpress.org/secret-key/1.1/salt/ WordPress.org secret-key service}.
+ *
+ * You can change these at any point in time to invalidate all existing cookies.
+ * This will force all users to have to log in again.
+ *
+ * @since 2.6.0
+ */
+define('AUTH_KEY',         getenv_docker('WORDPRESS_AUTH_KEY',         'put your unique phrase here'));
+define('SECURE_AUTH_KEY',  getenv_docker('WORDPRESS_SECURE_AUTH_KEY',  'put your unique phrase here'));
+define('LOGGED_IN_KEY',    getenv_docker('WORDPRESS_LOGGED_IN_KEY',    'put your unique phrase here'));
+define('NONCE_KEY',        getenv_docker('WORDPRESS_NONCE_KEY',        'put your unique phrase here'));
+define('AUTH_SALT',        getenv_docker('WORDPRESS_AUTH_SALT',        'put your unique phrase here'));
+define('SECURE_AUTH_SALT', getenv_docker('WORDPRESS_SECURE_AUTH_SALT', 'put your unique phrase here'));
+define('LOGGED_IN_SALT',   getenv_docker('WORDPRESS_LOGGED_IN_SALT',   'put your unique phrase here'));
+define('NONCE_SALT',       getenv_docker('WORDPRESS_NONCE_SALT',       'put your unique phrase here'));
+// (See also https://wordpress.stackexchange.com/a/152905/199287)
+
+/**#@-*/
+
+/**
+ * WordPress database table prefix.
+ *
+ * You can have multiple installations in one database if you give each
+ * a unique prefix. Only numbers, letters, and underscores please!
+ *
+ * At the installation time, database tables are created with the specified prefix.
+ * Changing this value after WordPress is installed will make your site think
+ * it has not been installed.
+ *
+ * @link https://developer.wordpress.org/advanced-administration/wordpress/wp-config/#table-prefix
+ */
+$table_prefix = getenv_docker('WORDPRESS_TABLE_PREFIX', 'wp_');
+
+/**
+ * For developers: WordPress debugging mode.
+ *
+ * Change this to true to enable the display of notices during development.
+ * It is strongly recommended that plugin and theme developers use WP_DEBUG
+ * in their development environments.
+ *
+ * For information on other constants that can be used for debugging,
+ * visit the documentation.
+ *
+ * @link https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/
+ */
+define('WP_DEBUG', !!getenv_docker('WORDPRESS_DEBUG', ''));
+
+/* Add any custom values between this line and the "stop editing" line. */
+
+// If we're running in a Docker container, we need to set the HTTP_HOST and SERVER_PORT
+// to empty strings, otherwise WordPress will try to use the container name as the host.
+// This is necessary for WordPress to work correctly in a Docker environment.
+// This is a workaround for the issue where WordPress tries to use the container name as the host,
+// which can cause issues with SSL and other configurations.
+if (defined('WP_CLI') && constant('WP_CLI')) {
+  $_SERVER["HTTP_HOST"] = "";
+  $_SERVER['SERVER_PORT'] = 80;
+}
+
+// If we're behind a proxy server and using HTTPS, we need to alert WordPress of that fact
+// see also https://wordpress.org/support/article/administration-over-ssl/#using-a-reverse-proxy
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strpos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false) {
+    $_SERVER['HTTPS'] = 'on';
+}
+
+/** URL routing (Optional, may not be necessary) */
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
+$siteUrl = getenv_docker('WORDPRESS_SITE_URL', 'localhost');
+$siteUrl = (strpos($siteUrl, 'http') === 0) ? $siteUrl : $protocol . $siteUrl;
+define('WP_HOME', $siteUrl);
+define('WP_SITEURL', $siteUrl . '/wp');
+
+// Define the content directory and URL
+// This is where your themes, plugins, and uploads will be stored.
+// The default is to use the "content" directory in the same directory as this file.
+// If you want to use a different directory, you can change the path below.
+// Note: This is not the same as the "wp-content" directory, which is the default location for WordPress content.
+define( 'WP_CONTENT_DIR', dirname(__FILE__) . '/content' );
+define( 'WP_CONTENT_URL', 'https://' . $_SERVER['HTTP_HOST'] . '/content' );
+
+// Load all WordPress environment variables from the .env file
+$wordpressEnvs = array_filter($_ENV, function ($key) {
+    return strpos($key, 'WORDPRESS_') === 0;
+}, ARRAY_FILTER_USE_KEY);
+
+// Define all remaining WordPress environment variables
+foreach ($wordpressEnvs as $key => $value) {
+    $key = str_replace('WORDPRESS_', '', $key);
+    if (!defined($key))
+        define($key, $value);
+}
+
+// If there's a WORDPRESS_CONFIG_EXTRA environment variable, evaluate it
+if ($configExtra = getenv_docker('WORDPRESS_CONFIG_EXTRA', '')) {
+    eval($configExtra);
+}
+
+/* That's all, stop editing! Happy publishing. */
+
+/** Absolute path to the WordPress directory. */
+if (! defined('ABSPATH')) {
+    define('ABSPATH', __DIR__ . '/');
+}
+
+/** Sets up WordPress vars and included files. */
+require_once ABSPATH . 'wp-settings.php';

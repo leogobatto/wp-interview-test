@@ -1,0 +1,7 @@
+{
+  "*.{js,jsx,ts,tsx}": "eslint",
+  "*.{css,scss,sass}": "stylelint",
+  "*.{json,yaml,yml,md}": "prettier --check",
+  "*.{html}": "prettier --check --parser html",
+  "*.{php}": "pint --test"
+}

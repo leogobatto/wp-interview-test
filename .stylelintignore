@@ -1,0 +1,19 @@
+# Node and vendor
+node_modules/
+vendor/
+dist/
+build/
+
+# CSS / SCSS minified
+**/*.min.css
+**/*.min.scss
+**/vendor/**/*.css
+
+# WordPress and uploads
+wp/
+content/**/*
+
+# Misc
+out/
+coverage/
+**/.*

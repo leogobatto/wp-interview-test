@@ -1,0 +1,27 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🔍 Running pre-commit checks..."
+
+# Check if lint-staged config exists
+if [ ! -f ".lintstagedrc.json" ]; then
+    echo "❌ .lintstagedrc.json not found, skipping lint-staged"
+    exit 0
+fi
+
+# Check if we have staged files
+if [ -z "$(git diff --cached --name-only)" ]; then
+    echo "ℹ️  No staged files, skipping lint-staged"
+    exit 0
+fi
+
+echo "📝 Running lint-staged..."
+if command -v lando >/dev/null 2>&1 && lando info >/dev/null 2>&1; then
+    echo "🐳 Using Lando environment..."
+    lando lint-staged
+else
+    echo "🏠 Using local environment..."
+    npx lint-staged
+fi
+
+echo "✅ Pre-commit checks completed!"

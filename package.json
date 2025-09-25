@@ -1,0 +1,63 @@
+{
+  "name": "testing",
+  "version": "0.1.0",
+  "description": "Generated with wp-devops",
+  "private": true,
+  "author": "Leonardo Gobatto <lgobatto@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:lgobatto/wp-devops-setup.git"
+  },
+  "bugs": {
+    "url": "git@github.com:lgobatto/wp-devops-setup.git/issues"
+  },
+  "homepage": "git@github.com:lgobatto/wp-devops-setup.git#readme",
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0",
+    "composer:install": "lando composer install",
+    "composer:update": "lando composer update",
+    "wp:info": "lando wp --info",
+    "wp:help": "lando wp help",
+    "prepare": "husky install",
+    "commit": "lando git-cz",
+    "format": "prettier --write .",
+    "lint": "lando eslint . --ext .js,.ts",
+    "lint:fix": "lando eslint . --ext .js,.ts --fix"
+  },
+  "devDependencies": {
+    "@cspell/dict-php": "^4.0.14",
+    "@cspell/dict-pt-br": "^2.4.0",
+    "standard-version": "^9.5.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-plugin-import": "^2.32.0",
+    "prettier": "^2.8.8",
+    "stylelint": "^16.21.1",
+    "stylelint-config-standard-scss": "^15.0.1",
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
+    "@commitlint/prompt": "^18.4.3",
+    "commitizen": "^4.3.0",
+    "conventional-changelog-cli": "^4.1.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.1",
+    "globals": "^16.3.0",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.30.1",
+    "eslint-plugin-prettier": "^4.2.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/prompt"
+    }
+  },
+  "keywords": [
+    "wordpress",
+    "lando",
+    "devops",
+    "ci-cd",
+    "gitflow",
+    "testing"
+  ]
+}

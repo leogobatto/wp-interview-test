@@ -1,0 +1,62 @@
+{
+  "Conventional Commit - feat": {
+    "prefix": "cc-feat",
+    "body": [
+      "feat($1): $2",
+      "",
+      "$3",
+      "",
+      "$4"
+    ],
+    "description": "Template for new feature"
+  },
+  "Conventional Commit - fix": {
+    "prefix": "cc-fix",
+    "body": [
+      "fix($1): $2",
+      "",
+      "$3",
+      "",
+      "Fixes #$4"
+    ],
+    "description": "Template for bug fix"
+  },
+  "Conventional Commit - docs": {
+    "prefix": "cc-docs",
+    "body": [
+      "docs($1): $2",
+      "",
+      "$3"
+    ],
+    "description": "Template for documentation"
+  },
+  "Conventional Commit - refactor": {
+    "prefix": "cc-refactor",
+    "body": [
+      "refactor($1): $2",
+      "",
+      "$3"
+    ],
+    "description": "Template for refactoring"
+  },
+  "Conventional Commit - chore": {
+    "prefix": "cc-chore",
+    "body": [
+      "chore($1): $2",
+      "",
+      "$3"
+    ],
+    "description": "Template for maintenance tasks"
+  },
+  "Conventional Commit - breaking change": {
+    "prefix": "cc-breaking",
+    "body": [
+      "$1($2): $3",
+      "",
+      "BREAKING CHANGE: $4",
+      "",
+      "$5"
+    ],
+    "description": "Template for breaking change"
+  }
+}

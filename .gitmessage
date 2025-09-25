@@ -1,0 +1,29 @@
+# <type>(<scope>): <description>
+#
+# <body>
+#
+# <footer>
+
+# --- REMOVE THIS LINE AND EVERYTHING BELOW ---
+# Available types:
+# feat:     A new feature
+# fix:      A bug fix
+# docs:     Documentation changes
+# style:    Formatting, white-space, etc
+# refactor: Code refactoring
+# perf:     Performance improvements
+# test:     Adding tests
+# chore:    Maintenance tasks
+# ci:       CI/CD changes
+# build:    Build system changes
+# revert:   Revert previous commit
+# hotfix:   Critical production fix
+# release:  Version release
+#
+# Remember:
+# - Use imperative mood: "add" not "added"
+# - Don't capitalize first letter
+# - No dot (.) at the end
+# - First line up to 72 characters
+# - For BREAKING CHANGES, add "BREAKING CHANGE:" in footer
+# - Reference issues: "Closes #123" or "Fixes #123"

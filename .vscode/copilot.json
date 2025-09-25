@@ -1,0 +1,39 @@
+{
+  "commitMessage": {
+    "format": "conventional",
+    "template": "<type>(<scope>): <description>\n\n<body>\n\n<footer>",
+    "rules": {
+      "maxLength": 72,
+      "types": [
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "perf",
+        "test",
+        "chore",
+        "ci",
+        "build",
+        "revert",
+        "hotfix",
+        "release"
+      ],
+      "imperative": true,
+      "lowercase": true,
+      "noEndingDot": true
+    },
+    "examples": [
+      "feat(auth): add login functionality",
+      "fix(ui): resolve button alignment issue",
+      "docs(readme): update installation instructions",
+      "style(css): format spacing in header component",
+      "refactor(api): optimize database queries",
+      "perf(images): compress and lazy load thumbnails",
+      "test(auth): add unit tests for login validation",
+      "chore(deps): update npm dependencies",
+      "ci(github): add automated testing workflow",
+      "build(webpack): optimize bundle size configuration"
+    ]
+  }
+}

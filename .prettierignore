@@ -1,0 +1,36 @@
+# Ignore node_modules and build directories
+node_modules/
+dist/
+build/
+
+# Ignore WordPress core
+wp/
+wp-content/plugins/
+wp-content/mu-plugins/
+wp-content/uploads/
+wp-content/upgrade/
+
+content/plugins/
+content/mu-plugins/
+content/uploads/
+content/upgrade/
+
+# Ignore Composer dependencies
+vendor/
+
+# Ignore logs and environment
+*.log
+.env
+.env.*
+
+# Ignore IDE and system files
+.DS_Store
+Thumbs.db
+
+# Ignore Lando config cache
+.lando/
+
+# Ignore anything temporary
+*.tmp
+*.temp
+*.bak

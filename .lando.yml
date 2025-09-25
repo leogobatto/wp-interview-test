@@ -1,0 +1,140 @@
+name: testing
+recipe: wordpress
+config:
+  webroot: ./
+  via: nginx
+  php: '8.3'
+  xdebug: true
+  extra_php_extensions:
+    - bcmath
+    - exif
+    - gd
+    - mysqli
+    - zip
+    - imagick
+    - redis
+  config:
+    php: ./server/php/php.ini
+    vhosts: ./server/www/vhosts.conf
+  env_file:
+    - .env
+services:
+  appserver:
+    build_as_root:
+      - apt-get update
+      - apt-get install -y curl gnupg
+      - curl -fsSL https://deb.nodesource.com/setup_23.x | bash -
+      - apt-get install -y nodejs
+      - npm install -g npm@latest
+      - npm install -g yarn@1.22
+    build:
+      - composer install --no-interaction --no-progress --optimize-autoloader
+    run:
+      - ./server/cmd/install-wp.sh
+      - cd /app/content/themes/testing && composer install --no-interaction --no-progress --optimize-autoloader
+      - cd /app/content/themes/testing && yarn install && yarn build
+      - wp theme activate testing
+      - cd /app/content/themes/testing && wp acorn optimize:clear && wp acorn optimize
+  cache:
+    type: redis:6
+tooling:
+  yarn:
+    service: appserver
+  yarn-upgrade:
+    service: appserver
+    cmd: yarn upgrade --latest
+  yarn-clean-install:
+    service: appserver
+    cmd:
+      - rm -rf node_modules
+      - yarn install
+  git-cz:
+    service: appserver
+    description: Make commit using Conventional Commits
+    cmd: npx git-cz
+  commitlint-check:
+    service: appserver
+    description: Verificar se a mensagem de commit segue o padrão
+    cmd: npx commitlint --from HEAD~1 --to HEAD --verbose
+  conventional-changelog:
+    service: appserver
+    description: Gerar changelog baseado em commits convencionais
+    cmd: npx conventional-changelog -p angular -i CHANGELOG.md -s
+  eslint:
+    service: appserver
+    cmd: yarn eslint
+  prettier:
+    service: appserver
+    cmd: yarn prettier
+  stylelint:
+    service: appserver
+    cmd: yarn stylelint **/*.{css,scss,vue}
+  pint:
+    service: appserver
+    description: PHP Code Style (modern PSR-12)
+    cmd:
+      - pint
+  pint-check:
+    service: appserver
+    description: Check code style without fixing
+    cmd:
+      - pint --test
+  redis-cli:
+    service: cache
+    cmd: redis-cli
+  theme-build:
+    service: appserver
+    description: Build the Sage theme
+    dir: /app/content/themes/testing
+    cmd:
+      - composer install --no-interaction --no-progress --optimize-autoloader
+      - yarn install
+      - yarn build
+  theme-lint:
+    service: appserver
+    description: Lint the Sage theme
+    dir: /app/content/themes/testing
+    cmd:
+      - yarn lint
+      - pint --test
+  theme-dev:
+    service: appserver
+    description: Dev the Sage theme
+    dir: /app/content/themes/testing
+    cmd:
+      - yarn dev
+  acorn-make:
+    service: appserver
+    description: Create new Acorn classes interactively
+    dir: /app/content/themes/testing
+    cmd: wp acorn make:$ACORN_TYPE $ACORN_NAME
+    options:
+      type:
+        passthrough: true
+        alias:
+          - t
+        describe: Type of class to create
+        interactive:
+          type: list
+          message: What type of class would you like to create?
+          choices:
+            - name: Command (Artisan command)
+              value: command
+            - name: Component (View component class)
+              value: component
+            - name: Composer (View composer class)
+              value: composer
+            - name: Provider (Service provider class)
+              value: provider
+          weight: 100
+        env: ACORN_TYPE
+      filename:
+        passthrough: true
+        alias:
+          - 'n'
+        describe: Name of the class to create
+        interactive:
+          type: input
+          message: What is the name of the class?
+          weight: 200
+        env: ACORN_NAME

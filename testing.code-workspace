@@ -1,0 +1,467 @@
+{
+  "folders": [
+    {
+      "name": "🌿 testing",
+      "path": "."
+    },
+    {
+      "path": "./content/themes/testing",
+      "name": "🎨 Theme"
+    }
+  ],
+  "settings": {
+    "git.inputValidation": "always",
+    "git.inputValidationLength": 72,
+    "git.inputValidationSubjectLength": 72,
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "git.enableSmartCommit": true,
+    "git.suggestSmartCommit": true,
+    "git.autoStash": true,
+    "git.allowNoVerifyCommit": false,
+    "editor.formatOnSave": false,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true,
+      "source.organizeImports": true,
+      "source.fixAll": true
+    },
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/vendor": true,
+      "**/.lando": true,
+      "**/public/build": true,
+      "**/dist": true,
+      "**/.git": true,
+      "**/wp": true
+    },
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/vendor": true,
+      "**/.git": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true
+    },
+    "extensions.ignoreRecommendations": false,
+    "emmet.includeLanguages": {
+      "blade": "html",
+      "php": "html"
+    },
+    "files.autoSave": "onFocusChange",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "git.verboseCommit": true,
+    "git.useCommitInputAsStashMessage": true,
+    "git.promptToSaveFilesBeforeCommit": "always",
+    "git.smartCommitChanges": "tracked",
+    "git.allowForcePush": false,
+    "git.alwaysSignOff": false,
+    "git.enableCommitSigning": true,
+    "conventionalCommits.emojiFormat": "emoji",
+    "conventionalCommits.showEditor": true,
+    "conventionalCommits.silent": false,
+    "conventionalCommits.autoCommit": false,
+    "conventionalCommits.promptBody": true,
+    "conventionalCommits.promptFooter": true,
+    "conventionalCommits.promptScope": true,
+    "conventionalCommits.scopes": [
+      "ui",
+      "api",
+      "auth",
+      "config",
+      "deps",
+      "docs",
+      "tests",
+      "build",
+      "ci",
+      "theme",
+      "plugin",
+      "database",
+      "security",
+      "performance",
+      "core",
+      "docker",
+      "lando"
+    ],
+    "conventionalCommits.gitmoji": false,
+    "conventionalCommits.lineBreak": "\\n",
+    "gitlens.ai.experimental.generateCommitMessage.enabled": true,
+    "gitlens.experimental.generateCommitMessage.enabled": true,
+    "gitlens.ai.experimental.generateCommitMessage.model": "gpt-4",
+    "gitlens.ai.experimental.generateCommitMessage.maxTokens": 200,
+    "gitlens.ai.experimental.generateCommitMessage.temperature": 0.2,
+    "github.copilot.enable": {
+      "*": true,
+      "yaml": true,
+      "plaintext": true,
+      "markdown": true,
+      "scminput": true
+    },
+    "github.copilot.advanced": {
+      "debug.overrideEngine": "copilot-chat",
+      "debug.useNodeFetcher": true
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.requireConfig": true,
+    "prettier.useEditorConfig": true,
+    "[blade]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": false,
+      "editor.insertSpaces": true,
+      "editor.tabSize": 2
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": false,
+      "editor.insertSpaces": true,
+      "editor.tabSize": 2
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": false,
+      "editor.insertSpaces": true,
+      "editor.tabSize": 2
+    },
+    "[css]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": false,
+      "editor.insertSpaces": true,
+      "editor.tabSize": 2
+    },
+    "[scss]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": false,
+      "editor.insertSpaces": true,
+      "editor.tabSize": 2
+    },
+    "files.eol": "\n",
+    "php.validate.enable": true,
+    "php.validate.executablePath": "${workspaceFolder}/scripts/php-wrapper.sh",
+    "php.validate.run": "onSave",
+    "php.suggest.basic": false,
+    "intelephense.files.maxSize": 5000000,
+    "intelephense.files.exclude": [
+      "**/.git/**",
+      "**/node_modules/**",
+      "**/vendor/**/{Test,test,Tests,tests}/**",
+      "**/.lando/**",
+      "**/wp/**",
+      "**/content/cache/**"
+    ],
+    "intelephense.stubs": [
+      "wordpress"
+    ],
+    "[php]": {
+      "editor.defaultFormatter": "open-southeners.laravel-pint",
+      "editor.formatOnSave": true,
+      "editor.insertSpaces": true,
+      "editor.tabSize": 4
+    },
+    "gitlens.hovers.detailsMarkdownFormat": "testing"
+  },
+  "extensions": {
+    "recommendations": [
+      "eamodio.gitlens",
+      "ms-vscode.vscode-json",
+      "streetsidesoftware.code-spell-checker",
+      "vivaxy.vscode-conventional-commits",
+      "bmewburn.vscode-intelephense-client",
+      "wordpresstoolbox.wordpress-toolbox",
+      "tungvn.wordpress-snippet",
+      "junstyle.php-cs-fixer",
+      "felixfbecker.php-debug",
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "bradlc.vscode-tailwindcss",
+      "ms-azuretools.vscode-docker",
+      "ms-vscode-remote.remote-containers",
+      "ms-vscode.vscode-typescript-next",
+      "formulahendry.auto-rename-tag",
+      "christian-kohler.path-intellisense",
+      "ms-vscode.vscode-todo-highlight",
+      "mhutchie.git-graph",
+      "pkief.material-icon-theme",
+      "zhuangtongfa.material-theme",
+      "xdebug.php-debug",
+      "yzhang.markdown-all-in-one",
+      "davidanson.vscode-markdownlint",
+      "editorconfig.editorconfig",
+      "ms-vscode.js-debug",
+      "johnbillion.vscode-wordpress-hooks",
+      "valeryanm.vscode-phpsab",
+      "GitHub.copilot",
+      "GitHub.copilot-chat",
+      "ms-vscode-remote.remote-wsl",
+      "Catppuccin.catppuccin-vsc",
+      "sainnhe.everforest",
+      "eamodio.gitlens",
+      "mhutchie.git-graph",
+      "vivaxy.vscode-conventional-commits",
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "editorconfig.editorconfig",
+      "stylelint.vscode-stylelint",
+      "bmewburn.vscode-intelephense-client",
+      "bradlc.vscode-tailwindcss",
+      "open-southeners.laravel-pint"
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "🚀 Lando: Start",
+        "type": "shell",
+        "command": "lando",
+        "args": [
+          "start"
+        ],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "isBackground": true,
+        "problemMatcher": []
+      },
+      {
+        "label": "🛑 Lando: Stop",
+        "type": "shell",
+        "command": "lando",
+        "args": [
+          "stop"
+        ],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "ℹ️ Lando: Info",
+        "type": "shell",
+        "command": "lando",
+        "args": [
+          "info"
+        ],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "🌐 Yarn: Install (Node)",
+        "type": "shell",
+        "command": "lando",
+        "args": [
+          "yarn",
+          "install"
+        ],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "📦 Composer: Install Dependencies",
+        "type": "shell",
+        "command": "lando",
+        "args": [
+          "composer",
+          "install"
+        ],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "🗄️ Redis CLI",
+        "type": "shell",
+        "command": "lando",
+        "args": [
+          "redis-cli"
+        ],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "📝 Conventional Commit (via Lando)",
+        "type": "shell",
+        "command": "lando",
+        "args": [
+          "git-cz"
+        ],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "🔍 CommitLint: Check Last Commit",
+        "type": "shell",
+        "command": "lando",
+        "args": [
+          "commitlint-check"
+        ],
+        "group": "test",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "📋 Generate Changelog",
+        "type": "shell",
+        "command": "lando",
+        "args": [
+          "conventional-changelog"
+        ],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "🔧 PHP: Fix Code Style (Pint)",
+        "type": "shell",
+        "command": "lando",
+        "args": [
+          "pint"
+        ],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "🔍 PHP: Check Code Style (Pint)",
+        "type": "shell",
+        "command": "lando",
+        "args": [
+          "pint",
+          "--test"
+        ],
+        "group": "test",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": {
+          "owner": "pint",
+          "fileLocation": "absolute",
+          "pattern": {
+            "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error)\\s+-\\s+(.*)$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "severity": 4,
+            "message": 5
+          }
+        }
+      },
+      {
+        "label": "🏗️ Theme: Build Assets",
+        "type": "shell",
+        "command": "lando",
+        "args": [
+          "yarn",
+          "build"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}/content/themes/wordpress-dev"
+        },
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "👀 Theme: Watch Assets",
+        "type": "shell",
+        "command": "lando",
+        "args": [
+          "yarn",
+          "dev"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}/content/themes/wordpress-dev"
+        },
+        "group": "build",
+        "isBackground": true,
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "📦 Theme: Composer Install",
+        "type": "shell",
+        "command": "lando",
+        "args": [
+          "composer",
+          "install"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}/content/themes/wordpress-dev"
+        },
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      }
+    ]
+  }
+}

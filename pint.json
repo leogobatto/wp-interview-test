@@ -1,0 +1,26 @@
+{
+  "preset": "psr12",
+  "rules": {
+    "array_syntax": {
+      "syntax": "short"
+    },
+    "binary_operator_spaces": {
+      "default": "single_space"
+    }
+  },
+  "exclude": [
+    "wp",
+    "content",
+    "vendor",
+    "node_modules",
+    ".git",
+    "storage",
+    "bootstrap/cache",
+    "public/build",
+    "public/hot",
+    "public/storage",
+    "public/vendor",
+    "tests/coverage",
+    "tests/reports"
+  ]
+}
