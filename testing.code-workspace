@@ -204,7 +204,6 @@
       "stylelint.vscode-stylelint",
       "bmewburn.vscode-intelephense-client",
       "bradlc.vscode-tailwindcss",
-      "open-southeners.laravel-pint"
     ]
   },
   "tasks": {
