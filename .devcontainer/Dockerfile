@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     nginx \
     supervisor \
-    mysql-client \
+    mariadb-client-compat \
     redis-tools \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
