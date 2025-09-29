@@ -22,7 +22,6 @@ services:
   database:
     portforward: true
   appserver:
-    portforward: true
     build_as_root:
       - apt-get update
       - apt-get install -y curl gnupg
@@ -30,17 +29,19 @@ services:
       - apt-get install -y nodejs
       - npm install -g npm@latest
       - npm install -g yarn@1.22
-    build:
-      - composer install --no-interaction --no-progress --optimize-autoloader
-    run:
-      - ./server/cmd/install-wp.sh
-      - cd /app/content/themes/testing && composer install --no-interaction --no-progress --optimize-autoloader
-      - cd /app/content/themes/testing && yarn install && yarn build
-      - wp theme activate testing
-      - cd /app/content/themes/testing && wp acorn optimize:clear && wp acorn optimize
+      - chmod +x /app/server/cmd/install-wp.sh
   cache:
     portforward: true
     type: redis:6
+events:
+  post-start:
+    - bash ./server/cmd/install-wp.sh
+    - composer install --no-interaction --no-progress --optimize-autoloader
+    - cd /app/content/themes/testing && composer install --no-interaction --no-progress --optimize-autoloader
+    - cd /app/content/themes/testing && yarn install && yarn build
+    - wp theme activate testing
+    - cd /app/content/themes/testing && wp acorn optimize:clear && wp acorn optimize
+
 tooling:
   yarn:
     service: appserver
