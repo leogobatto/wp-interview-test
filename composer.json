@@ -17,7 +17,7 @@
   "license": "MIT",
   "require": {
     "php": ">=8.3",
-    "roots/wordpress": "6.8.1",
+    "roots/wordpress": "6.8.0",
     "inpsyde/wp-translation-downloader": "^2.5",
     "vlucas/phpdotenv": "^5.5"
   },
@@ -52,7 +52,7 @@
         {
           "name": "wordpress/wordpress",
           "type": "wordpress-core",
-          "version": "6.8.1"
+          "version": "6.8.0"
         }
       ]
     }
