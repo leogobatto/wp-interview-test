@@ -5,7 +5,7 @@ Projeto WordPress com tema Sage (Roots) configurado para desenvolvimento local c
 ## 🧱 Stack
 
 - PHP 8.3
-- Node.js 20
+- Node.js 23
 - MySQL 8.0
 - Redis 6
 - Nginx
@@ -23,31 +23,13 @@ Projeto WordPress com tema Sage (Roots) configurado para desenvolvimento local c
 # Iniciar ambiente
 lando start
 
-# Instalar dependências
-lando composer install
-cd content/themes/testing && lando yarn install && lando yarn build
+# Restaurar banco
+lando db-import server/data/db.sql.gz
 
 # Acessar o site
 # URL: https://testing.lndo.site
 # Admin: admin / admin
 ```
-
-### GitHub Codespaces
-
-1. Abra o repositório no GitHub
-2. Clique em "Code" → "Codespaces" → "Create codespace"
-3. Aguarde a configuração automática
-4. Acesse a URL fornecida pelo Codespaces
-
-**Credenciais padrão:**
-- URL: `https://[codespace-name]-8080.preview.app.github.dev`
-- Admin User: `admin`
-- Admin Password: `admin`
-- Admin Email: `admin@example.com`
-
-**Banco de dados:**
-- Backup automático: `./server/data/db.sql.gz` é importado na inicialização
-- Dados existentes são preservados e URLs atualizadas automaticamente
 
 ## 🛠️ Comandos Úteis
 
@@ -59,10 +41,18 @@ lando start
 lando stop
 lando restart
 
-# Comandos do tema
-lando theme-build    # Build assets do tema
-lando theme-dev      # Watch assets do tema
-lando theme-lint     # Lint do tema
+# Banco de dados
+lando db-import server/data/db.sql.gz
+
+# Toolings de pacotes
+lando yarn               # Executar Yarn no appserver
+lando yarn-upgrade       # Atualizar dependências (latest)
+lando yarn-clean-install # Reinstalar dependências
+
+# Tema (Sage)
+lando theme-build        # Build assets do tema
+lando theme-dev          # Watch assets do tema
+lando theme-lint         # Lint do tema (JS/CSS + Pint check)
 
 # PHP
 lando pint           # Fix code style
@@ -71,6 +61,16 @@ lando pint-check     # Check code style
 # Git
 lando git-cz         # Conventional commit
 lando commitlint-check
+lando conventional-changelog  # Gerar/atualizar CHANGELOG.md
+
+# JS/CSS linters e formatadores
+lando eslint         # ESLint no projeto
+lando prettier       # Prettier no projeto
+lando stylelint      # Stylelint para CSS/SCSS
+
+# Acorn (Laravel/Roots)
+# Exemplo: lando acorn-make -t component -n Button
+lando acorn-make
 
 # Outros
 lando redis-cli      # Acessar Redis
@@ -99,18 +99,25 @@ wp theme list
 ## 📁 Estrutura do Projeto
 
 ```
-├── .devcontainer/          # Configuração GitHub Codespaces
-│   ├── devcontainer.json   # Configuração principal
-│   ├── docker-compose.yml  # Serviços (MySQL, Redis, etc.)
-│   ├── Dockerfile          # Imagem customizada
-│   └── setup-codespaces.sh # Script de inicialização
 ├── content/
-│   ├── themes/testing/     # Tema Sage
-│   ├── plugins/           # Plugins WordPress
-│   └── uploads/           # Uploads
-├── wp/                    # WordPress Core
-├── .lando.yml            # Configuração Lando
-└── composer.json         # Dependências PHP
+│   ├── themes/
+│   │   └── testing/         # Tema Sage (Vite, Tailwind, Acorn)
+│   ├── plugins/             # Plugins WordPress
+│   └── uploads/             # Uploads
+├── server/
+│   ├── cmd/                 # Scripts de setup (ex.: install-wp.sh)
+│   ├── data/                # Dumps de banco, seeds
+│   ├── php/                 # php.ini
+│   └── www/                 # vhosts.conf (nginx)
+├── docs/                    # Documentação
+├── scripts/                 # Utilitários locais
+├── wp/                      # WordPress Core
+├── .lando.yml               # Configuração Lando (PHP 8.3, Nginx, Redis)
+├── composer.json            # Dependências PHP
+├── package.json             # Tooling JS (eslint, prettier, commitlint, etc.)
+├── pint.json                # Regras Laravel Pint (PSR-12)
+├── wp-config.php            # Configuração WP
+└── README.md
 ```
 
 ## 🔧 Configuração
@@ -143,11 +150,13 @@ REDIS_PORT="6379"
 ### Portas
 
 **Lando:**
+
 - Site: `https://testing.lndo.site`
 - MySQL: `localhost:3306`
 - Redis: `localhost:6379`
 
 **Codespaces:**
+
 - Site: `https://[codespace]-8080.preview.app.github.dev`
 - MySQL: `localhost:3306`
 - Redis: `localhost:6379`
@@ -155,6 +164,7 @@ REDIS_PORT="6379"
 ## 🎨 Tema Sage
 
 O tema utiliza:
+
 - **Vite** para build de assets
 - **Tailwind CSS** para estilos
 - **Blade** para templates
